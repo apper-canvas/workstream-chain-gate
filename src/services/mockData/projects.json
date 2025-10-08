@@ -1,0 +1,52 @@
+[
+  {
+    "Id": 1,
+    "name": "Website Redesign",
+    "description": "Complete overhaul of company website with modern design and improved UX",
+    "status": "active",
+    "startDate": "2024-01-15",
+    "dueDate": "2024-03-30",
+    "createdAt": "2024-01-10T09:00:00Z",
+    "updatedAt": "2024-01-20T14:30:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Mobile App Development",
+    "description": "Build native iOS and Android apps for customer engagement",
+    "status": "active",
+    "startDate": "2024-01-20",
+    "dueDate": "2024-05-15",
+    "createdAt": "2024-01-18T10:00:00Z",
+    "updatedAt": "2024-01-22T16:00:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "Marketing Campaign Q1",
+    "description": "Plan and execute Q1 marketing initiatives across all channels",
+    "status": "planning",
+    "startDate": "2024-02-01",
+    "dueDate": "2024-04-30",
+    "createdAt": "2024-01-25T11:00:00Z",
+    "updatedAt": "2024-01-25T11:00:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "Customer Portal",
+    "description": "Self-service portal for customers to manage accounts and support tickets",
+    "status": "on-hold",
+    "startDate": "2024-01-05",
+    "dueDate": "2024-02-28",
+    "createdAt": "2024-01-03T08:00:00Z",
+    "updatedAt": "2024-01-15T13:00:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "Internal Tools Migration",
+    "description": "Migrate legacy internal tools to modern cloud infrastructure",
+    "status": "completed",
+    "startDate": "2023-11-01",
+    "dueDate": "2024-01-15",
+    "createdAt": "2023-10-28T09:00:00Z",
+    "updatedAt": "2024-01-15T17:00:00Z"
+  }
+]
