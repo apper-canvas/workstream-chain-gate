@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ApperIcon from "@/components/ApperIcon";
 import { useSelector } from "react-redux";
 import Avatar from "@/components/atoms/Avatar";
@@ -8,9 +9,32 @@ import { AuthContext } from "@/App";
 
 const Header = ({ onMenuClick, showCreateButton, onCreateClick }) => {
   const [searchQuery, setSearchQuery] = useState("");
-const { logout } = useContext(AuthContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
   const { user } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
+
+  const handleInviteMember = () => {
+    setDropdownOpen(false);
+    navigate('/team/invite');
+  };
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
       <div className="flex items-center justify-between h-16 px-4 md:px-6">
@@ -49,11 +73,26 @@ const { logout } = useContext(AuthContext);
             <span className="hidden sm:inline">Logout</span>
           </Button>
 
-<Avatar 
-            name={user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 'User'} 
-            size="md"
-            className="cursor-pointer hover:shadow-lg transition-shadow"
-          />
+          <div className="relative" ref={dropdownRef}>
+            <Avatar 
+              name={user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 'User'} 
+              size="md"
+              className="cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            />
+            
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                <button
+                  onClick={handleInviteMember}
+                  className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition-colors"
+                >
+                  <ApperIcon name="UserPlus" className="w-4 h-4" />
+                  <span>Invite member</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

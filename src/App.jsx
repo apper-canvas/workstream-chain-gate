@@ -11,13 +11,13 @@ import ResetPassword from "@/components/pages/ResetPassword";
 import PromptPassword from "@/components/pages/PromptPassword";
 import ProjectDetail from "@/components/pages/ProjectDetail";
 import Team from "@/components/pages/Team";
+import TeamMember from "@/components/pages/TeamMember";
 import Dashboard from "@/components/pages/Dashboard";
 import Board from "@/components/pages/Board";
 import Projects from "@/components/pages/Projects";
 import Sidebar from "@/components/organisms/Sidebar";
 import MobileSidebar from "@/components/organisms/MobileSidebar";
 import Header from "@/components/organisms/Header";
-
 export const AuthContext = createContext(null);
 
 function AppContent() {
@@ -146,7 +146,8 @@ function AppContent() {
                       <Route path="/projects" element={<Projects />} />
                       <Route path="/projects/:id" element={<ProjectDetail />} />
                       <Route path="/board" element={<Board />} />
-                      <Route path="/team" element={<Team />} />
+<Route path="/team" element={<Team />} />
+                      <Route path="/team/invite" element={<TeamMember />} />
                     </Routes>
                   </div>
                 </main>
