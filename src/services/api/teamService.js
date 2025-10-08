@@ -1,6 +1,6 @@
 import teamMembersData from "../mockData/teamMembers.json";
 
-let teamMembers = [...teamMembersData];
+let teamMembers = [];
 
 const delay = () => new Promise(resolve => setTimeout(resolve, 300));
 
