@@ -72,7 +72,7 @@ const Header = ({ onMenuClick, showCreateButton, onCreateClick }) => {
             <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
             <span className="hidden sm:inline">Logout</span>
           </Button>
-
+          Test - {dropdownOpen}
 <div className="relative" ref={dropdownRef}>
             <Avatar 
               name={user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 'User'} 
@@ -80,7 +80,7 @@ const Header = ({ onMenuClick, showCreateButton, onCreateClick }) => {
               className="cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
-            test - {dropdownOpen}
+            
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border-2 border-gray-300 py-2 z-[9999]">
                 <button
