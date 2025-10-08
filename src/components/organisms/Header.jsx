@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import ApperIcon from "@/components/ApperIcon";
+import { useSelector } from "react-redux";
+import Avatar from "@/components/atoms/Avatar";
 import Button from "@/components/atoms/Button";
 import SearchBar from "@/components/molecules/SearchBar";
 import { AuthContext } from "@/App";
 
 const Header = ({ onMenuClick, showCreateButton, onCreateClick }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { logout } = useContext(AuthContext);
+const { logout } = useContext(AuthContext);
+  const { user } = useSelector((state) => state.user);
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
@@ -46,9 +49,11 @@ const Header = ({ onMenuClick, showCreateButton, onCreateClick }) => {
             <span className="hidden sm:inline">Logout</span>
           </Button>
 
-          <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-semibold cursor-pointer hover:shadow-lg transition-shadow">
-            JD
-          </div>
+<Avatar 
+            name={user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 'User'} 
+            size="md"
+            className="cursor-pointer hover:shadow-lg transition-shadow"
+          />
         </div>
       </div>
 
