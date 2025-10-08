@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import Modal from "@/components/atoms/Modal";
-import Input from "@/components/atoms/Input";
-import Textarea from "@/components/atoms/Textarea";
-import Select from "@/components/atoms/Select";
-import Button from "@/components/atoms/Button";
 import { projectService } from "@/services/api/projectService";
 import { toast } from "react-toastify";
+import Modal from "@/components/atoms/Modal";
+import Textarea from "@/components/atoms/Textarea";
+import Select from "@/components/atoms/Select";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
 
 const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    status: "planning",
-    startDate: "",
-    dueDate: ""
+const [formData, setFormData] = useState({
+    Name_c: "",
+    Description_c: "",
+    Status_c: "planning",
+    Start_Date_c: "",
+    Due_Date_c: ""
   });
-
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -28,11 +27,11 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
       onSuccess();
       onClose();
       setFormData({
-        name: "",
-        description: "",
-        status: "planning",
-        startDate: "",
-        dueDate: ""
+        Name_c: "",
+        Description_c: "",
+        Status_c: "planning",
+        Start_Date_c: "",
+        Due_Date_c: ""
       });
     } catch (error) {
       toast.error("Failed to create project");
@@ -43,63 +42,44 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create New Project">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="Project Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder="Enter project name"
-          required
-        />
-
-        <Textarea
-          label="Description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Describe your project..."
-          rows={3}
-        />
-
-        <Select
-          label="Status"
-          value={formData.status}
-          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-          options={[
-            { value: "planning", label: "Planning" },
-            { value: "active", label: "Active" },
-            { value: "on-hold", label: "On Hold" },
-            { value: "completed", label: "Completed" }
-          ]}
-        />
-
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            label="Start Date"
-            type="date"
-            value={formData.startDate}
-            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-            required
-          />
-
-          <Input
-            label="Due Date"
-            type="date"
-            value={formData.dueDate}
-            onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-            required
-          />
-        </div>
-
+            label="Project Name"
+            value={formData.Name_c}
+            onChange={e => setFormData({
+                ...formData,
+                Name_c: e.target.value
+            })}
+            value={formData.Description_c}
+            onChange={e => setFormData({
+                ...formData,
+                Description_c: e.target.value
+            })}
+            value={formData.Status_c}
+            onChange={e => setFormData({
+                ...formData,
+                Status_c: e.target.value
+            })}
+            value={formData.Start_Date_c}
+            onChange={e => setFormData({
+                ...formData,
+                Start_Date_c: e.target.value
+            })}
+            value={formData.Due_Date_c}
+            onChange={e => setFormData({
+                ...formData,
+                Due_Date_c: e.target.value
+            })}
+            required />
         <div className="flex justify-end space-x-3 pt-4">
-          <Button variant="ghost" onClick={onClose} type="button">
-            Cancel
-          </Button>
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "Creating..." : "Create Project"}
-          </Button>
+            <Button variant="ghost" onClick={onClose} type="button">Cancel
+                          </Button>
+            <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? "Creating..." : "Create Project"}
+            </Button>
         </div>
-      </form>
-    </Modal>
+    </form>
+</Modal>
   );
 };
 

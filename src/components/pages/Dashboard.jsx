@@ -41,46 +41,46 @@ const Dashboard = () => {
   };
 
   const getTaskCountByProject = (projectId) => {
-    const projectTasks = tasks.filter(t => t.projectId === projectId);
+const projectTasks = tasks.filter(t => t.project_c?.Id === projectId);
     return {
-      todo: projectTasks.filter(t => t.status === "todo").length,
-      "in-progress": projectTasks.filter(t => t.status === "in-progress").length,
-      done: projectTasks.filter(t => t.status === "done").length
+      todo: projectTasks.filter(t => t.Status_c === "todo").length,
+      "in-progress": projectTasks.filter(t => t.Status_c === "in-progress").length,
+      done: projectTasks.filter(t => t.Status_c === "done").length
     };
   };
 
   const stats = [
     {
-      label: "Total Projects",
+      title: "Total Projects",
       value: projects.length,
       icon: "FolderKanban",
-      color: "from-primary to-primary-dark",
-      bgColor: "from-primary/10 to-primary-dark/10"
+      color: "primary",
+      change: "+12%"
     },
     {
-      label: "Active Tasks",
-      value: tasks.filter(t => t.status !== "done").length,
-      icon: "CheckSquare",
-      color: "from-accent to-accent-dark",
-      bgColor: "from-accent/10 to-accent-dark/10"
+      title: "Active Tasks",
+      value: tasks.filter(t => t.Status_c !== "done").length,
+      icon: "ListTodo",
+      color: "accent",
+      change: "+8%"
     },
     {
-      label: "Completed",
-      value: tasks.filter(t => t.status === "done").length,
+      title: "Completed",
+      value: tasks.filter(t => t.Status_c === "done").length,
       icon: "CheckCircle2",
-      color: "from-success to-green-600",
-      bgColor: "from-success/10 to-green-600/10"
+      color: "success",
+      change: "+23%"
     },
     {
-      label: "Team Members",
-      value: 5,
+      title: "Team Members",
+      value: "12",
       icon: "Users",
-      color: "from-info to-blue-600",
-      bgColor: "from-info/10 to-blue-600/10"
+      color: "info",
+      change: "+2"
     }
   ];
 
-  const activeProjects = projects.filter(p => p.status === "active");
+  const activeProjects = projects.filter(p => p.Status_c === "active");
 
   if (loading) return <Loading type="card" />;
   if (error) return <Error message={error} onRetry={loadData} />;

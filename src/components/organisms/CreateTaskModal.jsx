@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from "react";
-import Modal from "@/components/atoms/Modal";
-import Input from "@/components/atoms/Input";
-import Textarea from "@/components/atoms/Textarea";
-import Select from "@/components/atoms/Select";
-import Button from "@/components/atoms/Button";
+import React, { useEffect, useState } from "react";
 import { taskService } from "@/services/api/taskService";
 import { teamService } from "@/services/api/teamService";
 import { toast } from "react-toastify";
+import Modal from "@/components/atoms/Modal";
+import Textarea from "@/components/atoms/Textarea";
+import Select from "@/components/atoms/Select";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
 
 const CreateTaskModal = ({ isOpen, onClose, onSuccess, projectId }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    status: "todo",
-    priority: "medium",
-    assigneeId: "",
-    dueDate: ""
+    Title_c: "",
+    Description_c: "",
+    Status_c: "todo",
+    Priority_c: "medium",
+    Assigned_To_c: "",
+    Due_Date_c: ""
   });
-
-  const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [teamMembers, setTeamMembers] = useState([]);
   useEffect(() => {
     if (isOpen) {
       loadTeamMembers();
@@ -43,19 +41,19 @@ const CreateTaskModal = ({ isOpen, onClose, onSuccess, projectId }) => {
     try {
       await taskService.create({
         ...formData,
-        projectId: parseInt(projectId),
-        assigneeId: formData.assigneeId ? parseInt(formData.assigneeId) : null
+        project_c: parseInt(projectId),
+        Assigned_To_c: formData.Assigned_To_c ? parseInt(formData.Assigned_To_c) : null
       });
       toast.success("Task created successfully!");
       onSuccess();
       onClose();
       setFormData({
-        title: "",
-        description: "",
-        status: "todo",
-        priority: "medium",
-        assigneeId: "",
-        dueDate: ""
+        Title_c: "",
+        Description_c: "",
+        Status_c: "todo",
+        Priority_c: "medium",
+        Assigned_To_c: "",
+        Due_Date_c: ""
       });
     } catch (error) {
       toast.error("Failed to create task");
@@ -64,70 +62,65 @@ const CreateTaskModal = ({ isOpen, onClose, onSuccess, projectId }) => {
     }
   };
 
-  return (
+return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create New Task">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Task Title"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          placeholder="Enter task title"
+          value={formData.Title_c}
+          onChange={(e) => setFormData({ ...formData, Title_c: e.target.value })}
           required
         />
 
         <Textarea
           label="Description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Describe the task..."
-          rows={3}
+          value={formData.Description_c}
+          onChange={(e) => setFormData({ ...formData, Description_c: e.target.value })}
+          rows={4}
         />
 
-        <div className="grid grid-cols-2 gap-4">
-          <Select
-            label="Status"
-            value={formData.status}
-            onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-            options={[
-              { value: "todo", label: "To Do" },
-              { value: "in-progress", label: "In Progress" },
-              { value: "done", label: "Done" }
-            ]}
-          />
-
-          <Select
-            label="Priority"
-            value={formData.priority}
-            onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-            options={[
-              { value: "low", label: "Low" },
-              { value: "medium", label: "Medium" },
-              { value: "high", label: "High" }
-            ]}
-          />
-        </div>
+        <Select
+          label="Status"
+          value={formData.Status_c}
+          onChange={(e) => setFormData({ ...formData, Status_c: e.target.value })}
+          options={[
+            { value: "todo", label: "To Do" },
+            { value: "in_progress", label: "In Progress" },
+            { value: "done", label: "Done" }
+          ]}
+        />
 
         <Select
-          label="Assignee"
-          value={formData.assigneeId}
-          onChange={(e) => setFormData({ ...formData, assigneeId: e.target.value })}
+          label="Priority"
+          value={formData.Priority_c}
+          onChange={(e) => setFormData({ ...formData, Priority_c: e.target.value })}
+          options={[
+            { value: "low", label: "Low" },
+            { value: "medium", label: "Medium" },
+            { value: "high", label: "High" }
+          ]}
+        />
+
+        <Select
+          label="Assign To"
+          value={formData.Assigned_To_c}
+          onChange={(e) => setFormData({ ...formData, Assigned_To_c: e.target.value })}
           options={[
             { value: "", label: "Unassigned" },
-            ...teamMembers.map(member => ({
-              value: member.Id.toString(),
-              label: member.name
+            ...(teamMembers || []).map(member => ({
+              value: member?.Id?.toString() || "",
+              label: member?.Name_c || "Unknown"
             }))
           ]}
         />
 
         <Input
-          label="Due Date"
           type="date"
-          value={formData.dueDate}
-          onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+          label="Due Date"
+          value={formData.Due_Date_c}
+          onChange={(e) => setFormData({ ...formData, Due_Date_c: e.target.value })}
           required
         />
-
         <div className="flex justify-end space-x-3 pt-4">
           <Button variant="ghost" onClick={onClose} type="button">
             Cancel

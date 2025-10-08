@@ -40,18 +40,18 @@ const Projects = () => {
     }
   };
 
-  const getTaskCountByProject = (projectId) => {
-    const projectTasks = tasks.filter(t => t.projectId === projectId);
+const getTaskCountByProject = (projectId) => {
+    const projectTasks = tasks.filter(t => t.project_c?.Id === projectId);
     return {
-      todo: projectTasks.filter(t => t.status === "todo").length,
-      "in-progress": projectTasks.filter(t => t.status === "in-progress").length,
-      done: projectTasks.filter(t => t.status === "done").length
+      todo: projectTasks.filter(t => t.Status_c === "todo").length,
+      "in-progress": projectTasks.filter(t => t.Status_c === "in-progress").length,
+      done: projectTasks.filter(t => t.Status_c === "done").length
     };
   };
 
   const filteredProjects = statusFilter === "all"
     ? projects
-    : projects.filter(p => p.status === statusFilter);
+    : projects.filter(p => p.Status_c === statusFilter);
 
   if (loading) return <Loading type="card" />;
   if (error) return <Error message={error} onRetry={loadData} />;

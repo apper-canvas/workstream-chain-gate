@@ -73,10 +73,10 @@ const Board = () => {
     if (!draggedTask || draggedTask.status === newStatus) return;
 
     try {
-      await taskService.updateStatus(draggedTask.Id, newStatus);
+await taskService.updateStatus(draggedTask.Id, newStatus);
       setTasks(prevTasks =>
         prevTasks.map(t =>
-          t.Id === draggedTask.Id ? { ...t, status: newStatus } : t
+          t.Id === draggedTask.Id ? { ...t, Status_c: newStatus } : t
         )
       );
       toast.success("Task status updated!");
@@ -94,9 +94,9 @@ const Board = () => {
   };
 
   const tasksByStatus = {
-    todo: tasks.filter(t => t.status === "todo"),
-    "in-progress": tasks.filter(t => t.status === "in-progress"),
-    done: tasks.filter(t => t.status === "done")
+    todo: tasks.filter(t => t.Status_c === "todo"),
+    "in-progress": tasks.filter(t => t.Status_c === "in-progress"),
+    done: tasks.filter(t => t.Status_c === "done")
   };
 
   const columns = [
@@ -139,8 +139,8 @@ const Board = () => {
               value={selectedProjectId}
               onChange={(e) => setSelectedProjectId(e.target.value)}
               options={projects.map(p => ({
-                value: p.Id.toString(),
-                label: p.name
+value: p.Id.toString(),
+                label: p.Name_c
               }))}
             />
           </Card>
@@ -174,9 +174,9 @@ const Board = () => {
                   <div className="space-y-3 min-h-[200px]">
                     {tasksByStatus[column.id].map((task) => (
                       <TaskCard
-                        key={task.Id}
+key={task.Id}
                         task={task}
-                        assignee={getAssignee(task.assigneeId)}
+                        assignee={getAssignee(task.Assigned_To_c?.Id)}
                         draggable
                         onDragStart={() => handleDragStart(task)}
                         onDragEnd={handleDragEnd}

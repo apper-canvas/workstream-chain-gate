@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import ApperIcon from "@/components/ApperIcon";
-import Card from "@/components/atoms/Card";
-import Avatar from "@/components/atoms/Avatar";
-import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
+import React, { useEffect, useState } from "react";
 import { teamService } from "@/services/api/teamService";
 import { taskService } from "@/services/api/taskService";
+import ApperIcon from "@/components/ApperIcon";
+import Error from "@/components/ui/Error";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
+import Badge from "@/components/atoms/Badge";
+import Avatar from "@/components/atoms/Avatar";
+import Card from "@/components/atoms/Card";
 
 const Team = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -37,11 +37,11 @@ const Team = () => {
   };
 
   const getTasksForMember = (memberId) => {
-    const memberTasks = tasks.filter(t => t.assigneeId === memberId);
+const memberTasks = tasks.filter(t => t.Assigned_To_c?.Id === memberId);
     return {
       total: memberTasks.length,
-      inProgress: memberTasks.filter(t => t.status === "in-progress").length,
-      completed: memberTasks.filter(t => t.status === "done").length
+      inProgress: memberTasks.filter(t => t.Status_c === "in-progress").length,
+      completed: memberTasks.filter(t => t.Status_c === "done").length
     };
   };
 
@@ -75,21 +75,18 @@ const Team = () => {
             : 0;
 
           return (
-            <Card key={member.Id} className="p-6">
+<Card key={member.Id} className="p-6">
               <div className="flex items-start space-x-4">
-                <Avatar src={member.avatar} name={member.name} size="xl" />
-
-                <div className="flex-1 min-w-0">
+                <Avatar src={member.Avatar_c} name={member.Name_c} size="xl" />
+                <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-1">
-                    {member.name}
+                    {member.Name_c}
                   </h3>
-                  <p className="text-sm text-secondary mb-3">{member.role}</p>
-
+                  <p className="text-sm text-secondary mb-3">{member.Role_c}</p>
                   <div className="flex items-center space-x-2 mb-4">
                     <ApperIcon name="Mail" className="w-4 h-4 text-secondary" />
-                    <span className="text-sm text-secondary">{member.email}</span>
+                    <span className="text-sm text-secondary">{member.Email_c}</span>
                   </div>
-
                   <div className="space-y-3">
                     <div>
                       <div className="flex items-center justify-between text-sm mb-2">

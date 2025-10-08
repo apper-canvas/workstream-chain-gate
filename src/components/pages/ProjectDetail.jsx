@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
-import StatusBadge from "@/components/molecules/StatusBadge";
-import TaskCard from "@/components/organisms/TaskCard";
-import CreateTaskModal from "@/components/organisms/CreateTaskModal";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
 import { projectService } from "@/services/api/projectService";
 import { taskService } from "@/services/api/taskService";
 import { teamService } from "@/services/api/teamService";
 import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import StatusBadge from "@/components/molecules/StatusBadge";
+import Error from "@/components/ui/Error";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
+import Projects from "@/components/pages/Projects";
+import TaskCard from "@/components/organisms/TaskCard";
+import CreateTaskModal from "@/components/organisms/CreateTaskModal";
+import Card from "@/components/atoms/Card";
+import Button from "@/components/atoms/Button";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -56,13 +57,13 @@ const ProjectDetail = () => {
   };
 
   const getAssignee = (assigneeId) => {
-    return teamMembers.find(m => m.Id === assigneeId);
+return teamMembers.find(m => m.Id === assigneeId);
   };
 
   const tasksByStatus = {
-    todo: tasks.filter(t => t.status === "todo"),
-    "in-progress": tasks.filter(t => t.status === "in-progress"),
-    done: tasks.filter(t => t.status === "done")
+    todo: tasks.filter(t => t.Status_c === "todo"),
+    "in-progress": tasks.filter(t => t.Status_c === "in-progress"),
+    done: tasks.filter(t => t.Status_c === "done")
   };
 
   const totalTasks = tasks.length;
@@ -73,7 +74,7 @@ const ProjectDetail = () => {
   if (error) return <Error message={error} onRetry={loadData} />;
   if (!project) return <Error message="Project not found" onRetry={() => navigate("/projects")} />;
 
-  return (
+return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2 text-sm text-secondary">
         <button
@@ -83,33 +84,30 @@ const ProjectDetail = () => {
           Projects
         </button>
         <ApperIcon name="ChevronRight" className="w-4 h-4" />
-        <span className="text-gray-900 font-medium">{project.name}</span>
+        <span className="text-gray-900 font-medium">{project.Name_c}</span>
       </div>
 
-      <Card className="p-6">
+      <Card>
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="flex-1">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                  {project.name}
-                </h1>
-                <p className="text-secondary">{project.description}</p>
-              </div>
-              <StatusBadge status={project.status} />
+            <div className="flex items-center gap-3 mb-4">
+              <h1 className="text-2xl font-bold text-gray-900">
+                {project.Name_c}
+              </h1>
+              <StatusBadge status={project.Status_c} />
             </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <p className="text-xs text-secondary mb-1">Start Date</p>
                 <p className="text-sm font-semibold text-gray-900">
-                  {format(new Date(project.startDate), "MMM dd, yyyy")}
+                  {format(new Date(project.Start_Date_c), "MMM dd, yyyy")}
                 </p>
               </div>
               <div>
                 <p className="text-xs text-secondary mb-1">Due Date</p>
                 <p className="text-sm font-semibold text-gray-900">
-                  {format(new Date(project.dueDate), "MMM dd, yyyy")}
+                  {format(new Date(project.Due_Date_c), "MMM dd, yyyy")}
                 </p>
               </div>
               <div>
@@ -122,7 +120,6 @@ const ProjectDetail = () => {
               </div>
             </div>
           </div>
-
           <div className="lg:w-64">
             <div className="space-y-4">
               <div>
@@ -175,9 +172,9 @@ const ProjectDetail = () => {
               <div className="space-y-3">
                 {tasksByStatus[status].map((task) => (
                   <TaskCard
-                    key={task.Id}
+key={task.Id}
                     task={task}
-                    assignee={getAssignee(task.assigneeId)}
+                    assignee={getAssignee(task.Assigned_To_c?.Id)}
                     onClick={() => setSelectedTask(task)}
                   />
                 ))}
