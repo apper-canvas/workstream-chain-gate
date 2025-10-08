@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "@/utils/cn";
 
-const Avatar = ({ src, name, size = "md", className }) => {
+const Avatar = ({ src, name, size = "md", className, onClick }) => {
   const sizes = {
     sm: "w-8 h-8 text-xs",
     md: "w-10 h-10 text-sm",
@@ -20,11 +20,13 @@ const Avatar = ({ src, name, size = "md", className }) => {
 
   return (
     <div
-      className={cn(
+className={cn(
         "rounded-full flex items-center justify-center font-semibold",
         sizes[size],
+        onClick && "cursor-pointer",
         className
       )}
+      onClick={onClick}
     >
       {src ? (
         <img src={src} alt={name} className="w-full h-full rounded-full object-cover" />
