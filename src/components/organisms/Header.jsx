@@ -80,7 +80,7 @@ const Header = ({ onMenuClick, showCreateButton, onCreateClick }) => {
               className="cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
-            
+            test - {dropdownOpen}
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border-2 border-gray-300 py-2 z-[9999]">
                 <button
